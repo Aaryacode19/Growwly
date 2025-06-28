@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "supabase/functions/*/index.ts": {
-      "runtime": "@vercel/node"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
