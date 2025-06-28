@@ -1,0 +1,532 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+  
+  body {
+    @apply bg-white dark:bg-black text-black dark:text-white font-mono;
+    font-feature-settings: "liga" 1, "calt" 1;
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar only on mobile devices */
+  @media (max-width: 768px) {
+    /* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) on mobile */
+    ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+
+    /* Hide scrollbar for Firefox on mobile */
+    html {
+      scrollbar-width: none;
+    }
+
+    /* For Internet Explorer and Edge on mobile */
+    body {
+      -ms-overflow-style: none;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-black dark:bg-white text-white dark:text-black px-4 py-2 border border-black dark:border-white hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white font-medium;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .btn-secondary {
+    @apply bg-white dark:bg-black text-black dark:text-white px-4 py-2 border border-black dark:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black font-medium;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .input-field {
+    @apply w-full px-3 py-2 border border-black dark:border-white bg-white dark:bg-black text-black dark:text-white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .input-field:focus {
+    @apply outline-none ring-2 ring-black dark:ring-white;
+    border-color: black !important;
+  }
+  
+  .dark .input-field:focus {
+    border-color: white !important;
+  }
+  
+  .input-field::placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field::-webkit-input-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field::-moz-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .input-field:-ms-input-placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+  
+  .card {
+    @apply border border-black dark:border-white bg-white dark:bg-black p-4 sm:p-6;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Enhanced date input styling */
+input[type="date"] {
+  /* Inherit all styling from input-field class */
+  color-scheme: light dark;
+  cursor: pointer;
+  position: relative;
+  
+  /* Ensure proper text color in both themes */
+  color: rgb(0, 0, 0) !important;
+}
+
+.dark input[type="date"] {
+  color: rgb(255, 255, 255) !important;
+}
+
+/* Style the calendar picker indicator - make it cover more area */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  filter: invert(0);
+  background: transparent;
+  color: inherit;
+  width: 40px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Firefox date input styling */
+input[type="date"]::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+  background: transparent;
+  color: inherit;
+  width: 40px;
+  height: 100%;
+}
+
+/* Ensure date input maintains border on focus */
+input[type="date"]:focus {
+  color: rgb(0, 0, 0) !important;
+  border-color: black !important;
+  outline: none;
+  ring: 2px;
+  ring-color: black;
+}
+
+.dark input[type="date"]:focus {
+  color: rgb(255, 255, 255) !important;
+  border-color: white !important;
+  ring-color: white;
+}
+
+/* Fix date input value visibility */
+input[type="date"]::-webkit-datetime-edit {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: inherit;
+}
+
+/* Enhanced theme transition effects */
+.theme-ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    rgba(0,0,0,0.12) 0%, 
+    rgba(0,0,0,0.08) 30%, 
+    rgba(0,0,0,0.04) 60%, 
+    transparent 100%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+}
+
+.theme-ripple.active {
+  width: 400vmax;
+  height: 400vmax;
+  opacity: 1;
+}
+
+/* Dark mode ripple effect */
+.dark .theme-ripple {
+  background: radial-gradient(circle, 
+    rgba(255,255,255,0.12) 0%, 
+    rgba(255,255,255,0.08) 30%, 
+    rgba(255,255,255,0.04) 60%, 
+    transparent 100%);
+}
+
+/* Page transition overlay for theme changes */
+@keyframes themeTransition {
+  0% { opacity: 0; }
+  50% { opacity: 0.1; }
+  100% { opacity: 0; }
+}
+
+.theme-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    rgba(0,0,0,0.05) 0%, 
+    rgba(255,255,255,0.05) 50%, 
+    rgba(0,0,0,0.05) 100%);
+  pointer-events: none;
+  z-index: 9998;
+  animation: themeTransition 1s ease-in-out;
+}
+
+/* Enhanced animations */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover effects */
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading animation for theme button */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1);
+  }
+}
+
+.dark .animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.dark .animate-pulse-glow {
+  box-shadow: 0 0 5px rgba(255,255,255,0.1);
+}
+
+.dark .animate-pulse-glow:hover {
+  box-shadow: 0 0 20px rgba(255,255,255,0.2), 0 0 30px rgba(255,255,255,0.1);
+}
+
+/* Enhanced focus states */
+.input-field:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark .input-field:focus {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Button hover animations */
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dark .btn-primary:hover, .dark .btn-secondary:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Card hover effects */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card:hover {
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth page transitions */
+.page-transition {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme button special effects */
+.theme-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.theme-button:hover::before {
+  left: 100%;
+}
+
+/* Enhanced header button styling */
+.btn-secondary {
+  @apply text-sm font-medium;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Improved button spacing and sizing */
+@media (min-width: 768px) {
+  .btn-secondary {
+    min-width: auto;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .btn-secondary {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 640px) {
+  .card {
+    @apply p-4;
+    margin: 0 16px; /* Add horizontal margin on mobile */
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Use dynamic viewport height on mobile */
+  }
+}
+
+/* Enhanced Mobile Menu Styling */
+@media (max-width: 768px) {
+  /* Mobile menu button improvements */
+  .mobile-menu-button {
+    position: relative;
+    z-index: 51;
+    touch-action: manipulation;
+  }
+  
+  /* Enhanced mobile menu styling */
+  .mobile-menu {
+    /* Slide-in animation */
+    animation: slideInRight 0.3s ease-out;
+    /* Enhanced shadow */
+    box-shadow: -10px 0 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dark .mobile-menu {
+    box-shadow: -10px 0 25px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Mobile menu slide animation */
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Enhanced backdrop */
+  .mobile-menu-backdrop {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* Enhanced modal styling for better mobile experience */
+@media (max-width: 768px) {
+  /* Ensure modals are properly centered and sized on mobile */
+  .modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  .modal-content {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+
+  /* Prevent modal content from being too close to screen edges */
+  .modal-content .p-6 {
+    padding: 20px;
+  }
+
+  /* Ensure delete modal buttons are properly sized on mobile */
+  .modal-content .flex.gap-3 {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal-content .flex.gap-3 button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+}
+
+/* Fix for any potential stacking context issues */
+.progress-card {
+  position: relative;
+  z-index: 1;
+}
+
+.progress-card .delete-button {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure proper modal backdrop behavior */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  touch-action: none;
+}
+
+/* Prevent scroll issues when modals are open */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Enhanced mobile touch targets */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements have proper touch targets */
+  button, .btn-primary, .btn-secondary, a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Exception for icon-only buttons */
+  button[title], .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+  }
+}
