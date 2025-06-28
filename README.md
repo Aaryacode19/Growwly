@@ -1,4 +1,4 @@
-# Growwly - Daily Progress Tracker: (https://bolt.new/~/stackblitz-starters-8sxptyqc)
+# Growwly - Daily Progress Tracker: (https://bolt.new/~/stackblitz-starters-8sxptyqc / https://bolt.new/~/stackblitz-starters-ds8npanf)
 
 A modern, minimalist daily progress tracking application built with React, TypeScript, and Supabase.
 
